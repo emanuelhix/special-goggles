@@ -1,9 +1,14 @@
+# This GitHub Actions workflow creates a local timestamp file on the runner machine
+# every time there is a push to the main branch. The file is stored outside
+# of the repository, in a sibling "timestamps" directory. Its filename
+# contains the UTC timestamp at the time of creation.
+
 name: Create Local Timestamp
 
 on:
   push:
     branches:
-      - main   # adjust if needed
+      - main  # adjust if needed
 
 jobs:
   write-timestamp:
@@ -12,6 +17,7 @@ jobs:
     steps:
       - name: Create timestamp file on runner machine
         run: |
-          mkdir -p /path/to/store/timestamps
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > /path/to/store/timestamps/timestamp.txt
+          mkdir -p ../timestamps  # store outside of the repository
+          timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "$timestamp" > ../timestamps/timestamp_${timestamp}.txt
 
