@@ -1,0 +1,17 @@
+name: Create Local Timestamp
+
+on:
+  push:
+    branches:
+      - main   # adjust if needed
+
+jobs:
+  write-timestamp:
+    runs-on: self-hosted  # runs physically on your machine
+
+    steps:
+      - name: Create timestamp file on runner machine
+        run: |
+          mkdir -p /path/to/store/timestamps
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > /path/to/store/timestamps/timestamp.txt
+
